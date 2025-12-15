@@ -1,6 +1,11 @@
 package com.nanda.recyclerview
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,7 +29,29 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.adapter = AdapterPenyanyi(this,listPenyanyi,object : AdapterPenyanyi.OnClickListener {
             override fun detailData(item: Penyanyi?) {
-                TODO("Not yet implemented")
+                Dialog(this@MainActivity).apply {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    setCancelable(true)
+                    setContentView(R.layout.detail_data_penyanyi)
+
+                    val image = this.findViewById<ImageView>(R.id.image_penyanyi)
+                    val nama = this.findViewById<TextView>(R.id.txtNamaPenyanyi)
+                    val kelahiran = this.findViewById<TextView>(R.id.txtTTLPenyanyi)
+                    val lagu = this.findViewById<TextView>(R.id.txtLaguPenyanyi)
+                    val btn= this.findViewById<Button>(R.id.btnClose)
+
+                    image.setImageResource(item?.foto ?:0)
+                    nama.text = "${item?.nama}"
+                    kelahiran.text = "${item?.kelahiran}"
+                    lagu.text = "${item?.lagu}"
+
+                    btn.setOnClickListener {
+                        this.dismiss()
+                    }
+
+
+
+                }.show()
             }
 
         })
